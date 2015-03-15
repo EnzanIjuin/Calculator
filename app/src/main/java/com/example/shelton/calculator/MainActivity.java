@@ -5,14 +5,48 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener{
+public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+
+    Button[] numbers = new Button[10];
+    Button[] operators = new Button[6];
+    Button[] edits = new Button[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        numbers[0] = (Button) findViewById(R.id.b0);
+        numbers[1] = (Button) findViewById(R.id.b1);
+        numbers[2] = (Button) findViewById(R.id.b2);
+        numbers[3] = (Button) findViewById(R.id.b3);
+        numbers[4] = (Button) findViewById(R.id.b4);
+        numbers[5] = (Button) findViewById(R.id.b5);
+        numbers[6] = (Button) findViewById(R.id.b6);
+        numbers[7] = (Button) findViewById(R.id.b7);
+        numbers[8] = (Button) findViewById(R.id.b8);
+        numbers[9] = (Button) findViewById(R.id.b9);
+
+        operators[0] = (Button) findViewById(R.id.b_equals);
+        operators[1] = (Button) findViewById(R.id.b_plus);
+        operators[2] = (Button) findViewById(R.id.b_minus);
+        operators[3] = (Button) findViewById(R.id.b_times);
+        operators[4] = (Button) findViewById(R.id.b_divide);
+        operators[5] = (Button) findViewById(R.id.b_mod);
+
+        edits[0] = (Button) findViewById(R.id.b_sign);
+        edits[1] = (Button) findViewById(R.id.b_point);
+        edits[2] = (Button) findViewById(R.id.b_clear);
+        edits[3] = (Button) findViewById(R.id.b_backspace);
+
+        for(Button b : numbers) b.setOnClickListener(this);
+        for(Button b : operators) b.setOnClickListener(this);
+        for(Button b : edits) b.setOnClickListener(this);
+
     }
 
 
@@ -40,6 +74,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        Toast.makeText(this, "Button was clicked!", Toast.LENGTH_LONG).show();
     }
 }

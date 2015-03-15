@@ -20,10 +20,10 @@
         android:text="Equation input here"
         android:gravity="right" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:ems="10"
         android:id="@+id/num"
         android:textAlignment="gravity"
@@ -34,7 +34,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:gravity="right"
-        android:text="Button clicks registered here" />
+        android:text="Button clicks registered here"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp" />
 
     <GridLayout
         android:layout_width="fill_parent"
@@ -59,8 +61,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="%"
-            android:id="@+id/b_percent"
+            android:text="&lt;-"
+            android:id="@+id/b_backspace"
             android:layout_row="0"
             android:layout_column="1"
             android:width="50dp"
@@ -69,8 +71,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="&lt;-"
-            android:id="@+id/b_bspace"
+            android:text="%"
+            android:id="@+id/b_mod"
             android:layout_row="0"
             android:layout_column="2"
             android:width="50dp"
@@ -80,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="÷"
-            android:id="@+id/b_div"
+            android:id="@+id/b_divide"
             android:layout_row="0"
             android:layout_column="3"
             android:width="50dp"
