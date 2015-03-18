@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import evaluator.Evaluator;
+
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -16,6 +18,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Button[] edits = new Button[4];
     TextView input, equation;
 
+    boolean complete = false, error = false, numIn = false;
+    Evaluator evaluator;
     StringBuffer inBuffer;
 
     @Override
@@ -23,6 +27,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        evaluator = new Evaluator();
         inBuffer = new StringBuffer();
 
         input = (TextView) findViewById(R.id.num);
@@ -84,82 +89,185 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
+        if(complete) {
+            inBuffer.delete(0, inBuffer.length());
+            equation.setText("");
+
+            if((v.getId() == R.id.b_plus || v.getId() == R.id.b_minus || v.getId() == R.id.b_times ||
+                    v.getId() == R.id.b_divide || v.getId() == R.id.b_mod) && !error) {
+                inBuffer.append(input.getText());
+                equation.setText(input.getText());
+                numIn = true;
+            }
+
+            input.setText("");
+
+            error = false;
+            complete = false;
+        }
+
         switch(v.getId()) {
             case R.id.b0:
-                input.setText(input.getText() + "0");
+                if(input.length() >= 1 && input.getText().toString().charAt(0) == '0'){}
+                else input.setText(input.getText() + "0");
+                numIn = true;
                 break;
             case R.id.b1:
-                input.setText(input.getText() + "1");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("1");
+                else input.setText(input.getText() + "1");
+                numIn = true;
                 break;
             case R.id.b2:
-                input.setText(input.getText() + "2");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("2");
+                else input.setText(input.getText() + "2");
+                numIn = true;
                 break;
             case R.id.b3:
-                input.setText(input.getText() + "3");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("3");
+                else input.setText(input.getText() + "3");
+                numIn = true;
                 break;
             case R.id.b4:
-                input.setText(input.getText() + "4");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("4");
+                else input.setText(input.getText() + "4");
+                numIn = true;
                 break;
             case R.id.b5:
-                input.setText(input.getText() + "5");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("5");
+                else input.setText(input.getText() + "5");
+                numIn = true;
                 break;
             case R.id.b6:
-                input.setText(input.getText() + "6");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("6");
+                else input.setText(input.getText() + "6");
+                numIn = true;
                 break;
             case R.id.b7:
-                input.setText(input.getText() + "7");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("7");
+                else input.setText(input.getText() + "7");
+                numIn = true;
                 break;
             case R.id.b8:
-                input.setText(input.getText() + "8");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("8");
+                else input.setText(input.getText() + "8");
+                numIn = true;
                 break;
             case R.id.b9:
-                input.setText(input.getText() + "9");
+                if(input.length() == 1 && input.getText().toString().charAt(0) == '0')
+                    input.setText("9");
+                else input.setText(input.getText() + "9");
+                numIn = true;
                 break;
             case R.id.b_point:
-                input.setText(input.getText() + ".");
+                boolean hasPoint = false;
+                for(char c : input.getText().toString().toCharArray()) {
+                    if(c == '.') {
+                        hasPoint = true;
+                        break;
+                    }
+                }
+                if(!hasPoint) input.setText(input.getText() + ".");
                 break;
             case R.id.b_plus:
-                equation.setText("" + equation.getText() + input.getText() + " + ");
-                inBuffer.append("+");
-                input.setText("");
+                if(numIn) {
+                    equation.setText("" + equation.getText() + input.getText() + " + ");
+                    inBuffer.append(input.getText() + "+");
+                    input.setText("");
+                    numIn = false;
+                } else if(equation.length() > 0) {
+                    equation.setText(equation.getText().subSequence(0, (equation.getText().length() - 3)) + " + ");
+                    inBuffer.deleteCharAt(inBuffer.length() - 1);
+                    inBuffer.append("+");
+                }
                 break;
             case R.id.b_minus:
-                equation.setText("" + equation.getText() + input.getText() + " - ");
-                inBuffer.append("-");
-                input.setText("");
+                if(numIn) {
+                    equation.setText("" + equation.getText() + input.getText() + " - ");
+                    inBuffer.append(input.getText() + "-");
+                    input.setText("");
+                    numIn = false;
+                } else if(equation.length() > 0) {
+                    equation.setText(equation.getText().subSequence(0, (equation.getText().length() - 3)) + " - ");
+                    inBuffer.deleteCharAt(inBuffer.length() - 1);
+                    inBuffer.append("-");
+                }
                 break;
             case R.id.b_times:
-                equation.setText("" + equation.getText() + input.getText() + " × ");
-                inBuffer.append("*");
-                input.setText("");
+                if(numIn) {
+                    equation.setText("" + equation.getText() + input.getText() + " × ");
+                    inBuffer.append(input.getText() + "*");
+                    input.setText("");
+                    numIn = false;
+                } else if(equation.length() > 0) {
+                    equation.setText(equation.getText().subSequence(0, (equation.getText().length() - 3)) + " × ");
+                    inBuffer.deleteCharAt(inBuffer.length() - 1);
+                    inBuffer.append("*");
+                }
                 break;
             case R.id.b_divide:
-                equation.setText("" + equation.getText() + input.getText() + " ÷ ");
-                inBuffer.append("/");
-                input.setText("");
+                if(numIn) {
+                    equation.setText("" + equation.getText() + input.getText() + " ÷ ");
+                    inBuffer.append(input.getText() + "/");
+                    input.setText("");
+                    numIn = false;
+                } else if(equation.length() > 3) {
+                    equation.setText(equation.getText().subSequence(0, (equation.getText().length() - 3)) + " ÷ ");
+                    inBuffer.deleteCharAt(inBuffer.length() - 1);
+                    inBuffer.append("/");
+                }
                 break;
             case R.id.b_mod:
-                equation.setText("" + equation.getText() + input.getText() + " % ");
-                inBuffer.append("%");
-                input.setText("");
+                if(numIn) {
+                    equation.setText("" + equation.getText() + input.getText() + " % ");
+                    inBuffer.append(input.getText() + "%");
+                    input.setText("");
+                    numIn = false;
+                } else if(equation.length() > 0) {
+                    equation.setText(equation.getText().subSequence(0, (equation.getText().length() - 3)) + " % ");
+                    inBuffer.deleteCharAt(inBuffer.length() - 1);
+                    inBuffer.append("%");
+                }
                 break;
             case R.id.b_clear:
                 input.setText("");
                 equation.setText("");
+                inBuffer.delete(0, inBuffer.length());
+                numIn = false;
                 break;
             case R.id.b_backspace:
-                input.setText(input.getText().subSequence(0, input.getText().length() - 1));
+                if(input.length() > 0) input.setText(input.getText().subSequence(0, input.getText().length() - 1));
+                if(input.length() == 1 && input.getText().charAt(0) == '-') input.setText("");
+                if(input.length() == 0) numIn = false;
                 break;
             case R.id.b_sign:
-                if(input.getText().charAt(0) != '-') {
-                    input.setText("-" + input.getText());
-                } else {
-                    input.setText(input.getText().subSequence(1, input.getText().length()));
+                if(input.length() > 0) {
+                    if (input.getText().charAt(0) != '-') {
+                        input.setText("-" + input.getText());
+                    } else {
+                        input.setText(input.getText().subSequence(1, input.length()));
+                    }
                 }
                 break;
             case R.id.b_equals:
-                equation.setText("" + equation.getText() + input.getText());
-                input.setText("Currently no expression evaluator =(");
+                if(numIn) {
+                    equation.setText("" + equation.getText() + input.getText() + " =");
+                    inBuffer.append(input.getText());
+
+                    double ans = evaluator.eval(inBuffer.toString());
+                    if((int) ans == ans) input.setText("" + (int)ans);
+                    else input.setText("" + ans);
+
+                    numIn = false;
+                    complete = true;
+                }
                 break;
         }
     }
