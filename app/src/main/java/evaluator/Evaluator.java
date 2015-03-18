@@ -230,7 +230,7 @@ class BogusOperator extends Operator{
 class ModOperator extends Operator {
     
     ModOperator(){
-        super('*', 3);
+        super('%', 3);
     }
     
     @Override
